@@ -1,3 +1,5 @@
+package nl.bioinf.jprofijt;
+
 /**
  *
  * Copyright (c) 2018 Jouke Profijt
@@ -68,10 +70,9 @@ public class WekaClassifier {
     }
 
     private RandomForest buildClassifier(Instances instances) throws Exception {
-        String[] options = new String[1];
-        options[0] = "-P 100 -| 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1 -depth 15";            // unpruned tree
+        int MaxDepth = 15;
         RandomForest tree = new RandomForest();         // new instance of tree
-        tree.setOptions(options);     // set the options
+        tree.setMaxDepth(MaxDepth);
         tree.buildClassifier(instances);   // build classifier
         return tree;
     }
