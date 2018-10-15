@@ -1,0 +1,19 @@
+@relation CleanDataAll
+
+@attribute huml numeric
+@attribute humw numeric
+@attribute ulnal numeric
+@attribute ulnaw numeric
+@attribute feml numeric
+@attribute femw numeric
+@attribute tibl numeric
+@attribute tibw numeric
+@attribute tarl numeric
+@attribute tarw numeric
+@attribute type {SW,W,T,R,P,SO}
+
+
+@data
+15.24,1.4,18.37,1.13,13.75,1.05,25.57,0.91,19.1,0.86,?
+41.65,3.62,46.01,3.03,38.37,2.85,48.11,2.55,35.49,2.22,?
+46.38,3.41,39.8,3.48,54.67,4.08,85.88,4.04,63.75,3.09,?
