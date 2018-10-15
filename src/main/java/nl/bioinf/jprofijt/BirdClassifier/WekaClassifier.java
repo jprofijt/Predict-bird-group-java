@@ -1,4 +1,4 @@
-package nl.bioinf.jprofijt;
+package nl.bioinf.jprofijt.BirdClassifier;
 
 /**
  *
