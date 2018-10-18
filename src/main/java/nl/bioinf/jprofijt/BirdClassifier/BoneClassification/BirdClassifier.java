@@ -1,11 +1,10 @@
-package nl.bioinf.jprofijt.BirdClassifier;
-
 /**
- *
  * Copyright (c) 2018 Jouke Profijt
  * Licensed under GPLv3. See LICENSE
- *
  */
+package nl.bioinf.jprofijt.BirdClassifier.BoneClassification;
+
+
 
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instance;
@@ -14,11 +13,11 @@ import weka.core.converters.ConverterUtils.DataSource;
 
 import java.io.IOException;
 
-public class WekaClassifier {
+public class BirdClassifier {
     private final String modelFile = "RandomForest_model.model";
 
     public static void main(String[] args) {
-        WekaClassifier runner = new WekaClassifier();
+        BirdClassifier runner = new BirdClassifier();
         runner.start();
     }
 
