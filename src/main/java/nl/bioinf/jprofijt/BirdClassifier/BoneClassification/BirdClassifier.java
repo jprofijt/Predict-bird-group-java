@@ -14,7 +14,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 import java.io.IOException;
 
 public class BirdClassifier {
-    private final String modelFile = "RandomForest_model.model";
+    private final String modelFile = "testdata/RandomForest_model.model";
 
     public static void main(String[] args) {
         BirdClassifier runner = new BirdClassifier();
@@ -72,7 +72,7 @@ public class BirdClassifier {
         int MaxDepth = 15;
         RandomForest tree = new RandomForest();         // new instance of tree
         tree.setMaxDepth(MaxDepth);
-        tree.buildClassifier(instances);   // build classifier
+        tree.buildClassifier(instances);
         return tree;
     }
 
