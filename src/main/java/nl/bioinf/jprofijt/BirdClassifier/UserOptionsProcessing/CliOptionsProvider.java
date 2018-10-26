@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2018 Jouke Profijt
  * Licensed under GPLv3. See LICENSE
  */
@@ -82,12 +82,17 @@ public class CliOptionsProvider implements OptionsProvider {
         //should check if the file has the correct filetype.
         File f = new File(file);
             if (f.toString().contains(".csv") | f.toString().contains(".arff")) {
-                if (f.exists() && f.canRead()) {
-                    //Checks if file exists
-                    return true;
+                try {
+                    if (f.exists() && f.canRead()) {
+                        //Checks if file exists
+                        return true;
 
-                } else {
-                    return false;
+                    } else {
+                        throw new NoSuchFileException("Given datafile can not be found, Given the correct path?");
+                        return false;
+                    }
+                } catch (NoSuchFileException ex) {
+                    throw new NoSuchFileException(ex);
                 }
             } else return false;
 
@@ -95,6 +100,17 @@ public class CliOptionsProvider implements OptionsProvider {
 
 
     }
+
+    public void printHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("BirdClassifier", options);
+    }
+
+    @Override
+    public String getDataFile() {return this.commandLine.getOptionValue(FILE);}
+
+    @Override
+    public String getOutputFile() {return this.commandLine.getOptionValue(OUT, "BirdClassificationResults.arff");}
 }
 
 
