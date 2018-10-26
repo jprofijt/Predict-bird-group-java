@@ -11,6 +11,8 @@ import weka.core.pmml.jaxbbindings.True;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.NoSuchFileException;
 
 /**
  * Class that parses commandline for the OptionsProvider interface
@@ -80,11 +82,17 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     private boolean checkFile(String file){
-        //should check if the file has the correct datatypes and or it exists.
+        //should check if the file has the correct filetype.
         File f = new File(file);
+            if (f.toString().contains(".csv") | f.toString().contains(".arff")) {
+                if (f.exists() && f.canRead()) {
+                    //Checks if file exists
+                    return true;
 
-
-        return true;
+                } else {
+                    return false;
+                }
+            } else return false;
 
 
 
