@@ -22,7 +22,6 @@ import java.nio.file.NoSuchFileException;
 
 public class CliOptionsProvider implements OptionsProvider {
     private static final String FILE = "file";
-    private static final String CSV = "csv";
     private static final String OUT = "out";
     private static final String HELP = "help";
 
@@ -52,12 +51,10 @@ public class CliOptionsProvider implements OptionsProvider {
         this.options = new Options();
         Option helpOption = new Option("h", HELP, false,"Prints this Message");
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
-        Option isCSVOption = new Option("c", CSV, false, "Use this option if file is in csv format");
         Option outOption = new Option("o", OUT, true, "output file format. Default .arff");
 
         options.addOption(helpOption);
         options.addOption(fileOption);
-        options.addOption(isCSVOption);
         options.addOption(outOption);
     }
 
