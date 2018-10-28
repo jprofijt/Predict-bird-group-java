@@ -65,7 +65,7 @@ public class CliOptionsProvider implements OptionsProvider {
 
             if (commandLine.hasOption(FILE)) {
                 String f = commandLine.getOptionValue(FILE);
-                if (checkFile(f)) {
+                if (true) {
                     this.file = f;
 
                 } else {
@@ -78,6 +78,7 @@ public class CliOptionsProvider implements OptionsProvider {
         }
     }
 
+/*
     private boolean checkFile(String file){
         //should check if the file has the correct filetype.
         File f = new File(file);
@@ -97,9 +98,10 @@ public class CliOptionsProvider implements OptionsProvider {
             } else return false;
 
 
+*/
 
 
-    }
+ //   }
 
     public void printHelp() {
         HelpFormatter formatter = new HelpFormatter();

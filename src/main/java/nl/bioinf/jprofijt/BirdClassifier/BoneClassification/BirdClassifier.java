@@ -12,25 +12,21 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.core.converters.CSVLoader;
 
 import java.io.IOException;
 
 public class BirdClassifier {
     private final String modelFile = "testdata/RandomForest_model.model";
-    private final OptionsProvider optionsProvider;
+    private String unknownFile;
+    private String outputFile;
 
-    public BirdClassifier(final OptionsProvider optionsProvider) { this.optionsProvider = optionsProvider;
 
-    }
 
-    public static void main(String[] args) {
-        BirdClassifier runner = new BirdClassifier();
-        runner.start();
-    }
 
-    private void start() {
+    public void start() {
         String datafile = "testdata/Bonelenghts.arff";
-        String unknownFile = optionsProvider.getDataFile();
+
 
         try {
             Instances instances = loadArff(datafile);
@@ -118,6 +114,16 @@ public class BirdClassifier {
         } catch (Exception e) {
             throw new IOException("could not read from file");
         }
+    }
+    public void setUnknownFile(String datafile) {
+        this.unknownFile = datafile;
+        return;
+
+    }
+
+    public void setOutputFile(String datafile) {
+        this.outputFile = datafile;
+        return;
     }
 }
 

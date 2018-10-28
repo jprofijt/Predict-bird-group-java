@@ -5,6 +5,8 @@
 package nl.bioinf.jprofijt.BirdClassifier.UserOptionsProcessing;
 
 
+import nl.bioinf.jprofijt.BirdClassifier.BoneClassification.BirdClassifier;
+
 import java.util.Arrays;
 
 public final class CliArgumentsRunner {
@@ -20,6 +22,12 @@ public final class CliArgumentsRunner {
             if (options.helpRequested()) {
                 options.printHelp();
                 return;
+            } else {
+               BirdClassifier Birds = new BirdClassifier();
+               Birds.setUnknownFile(options.getDataFile());
+               Birds.setOutputFile(options.getOutputFile());
+               Birds.start();
+
             }
         } catch (IllegalStateException ex) {
             System.err.println("An error has occured while processing your commandline \"" + Arrays.toString(args) + "\"");
