@@ -29,6 +29,7 @@ public class CliOptionsProvider implements OptionsProvider {
     private Options options;
     private CommandLine commandLine;
     private String file;
+    private String defaultOutput;
 
 
     public CliOptionsProvider(final String[] args){
@@ -51,11 +52,13 @@ public class CliOptionsProvider implements OptionsProvider {
         this.options = new Options();
         Option helpOption = new Option("h", HELP, false,"Prints this Message");
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
-        Option outOption = new Option("o", OUT, true, "output file format. Default .arff");
+        Option outOption = new Option("o", OUT, true, "output file location. /path/to/output. default BirdclassificationResults.arff or .csv if that option is given");
+        Option typeOption = new Option("c", "csv", false, "Sets the output type to csv");
 
         options.addOption(helpOption);
         options.addOption(fileOption);
         options.addOption(outOption);
+        options.addOption(typeOption);
     }
 
     private void processCommandline() {
@@ -71,6 +74,11 @@ public class CliOptionsProvider implements OptionsProvider {
                 } else {
                     throw new IllegalArgumentException("File is unreadable"); // placeholder
                 }
+
+            }
+
+            if (commandLine.hasOption("csv")) {
+                this.defaultOutput = "BirdClassificationResults.csv";
 
             }
         } catch (ParseException ex) {
@@ -112,7 +120,7 @@ public class CliOptionsProvider implements OptionsProvider {
     public String getDataFile() {return this.commandLine.getOptionValue(FILE);}
 
     @Override
-    public String getOutputFile() {return this.commandLine.getOptionValue(OUT, "BirdClassificationResults.arff");}
+    public String getOutputFile() {return this.commandLine.getOptionValue(OUT, this.defaultOutput);}
 }
 
 

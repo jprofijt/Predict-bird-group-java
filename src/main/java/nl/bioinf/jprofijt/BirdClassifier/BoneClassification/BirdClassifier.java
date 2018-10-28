@@ -14,6 +14,7 @@ import weka.core.Option;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.converters.CSVLoader;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class BirdClassifier {
@@ -51,7 +52,8 @@ public class BirdClassifier {
             double clsLabel = tree.classifyInstance(unknownInstances.instance(i));
             labeled.instance(i).setClassValue(clsLabel);
         }
-        System.out.println("\nNew, labeled = \n" + labeled);
+        //System.out.println("\nNew, labeled = \n" + labeled);
+            writeToArff(labeled);
     }
 
     private RandomForest loadClassifier() throws Exception {
@@ -124,6 +126,12 @@ public class BirdClassifier {
     public void setOutputFile(String datafile) {
         this.outputFile = datafile;
         return;
+    }
+
+    private void writeToArff(Instances labels) throws IOException{
+        FileWriter writer = new FileWriter(this.outputFile);
+        writer.write(labels.toString());
+        writer.close();
     }
 }
 
