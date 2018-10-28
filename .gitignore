@@ -6,3 +6,4 @@ gradle
 out/
 RandomForest_model.model
 BirdClassificationResults.arff
+BirdClassificationResults.csv

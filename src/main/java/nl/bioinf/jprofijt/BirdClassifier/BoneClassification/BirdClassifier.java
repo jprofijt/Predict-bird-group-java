@@ -11,9 +11,12 @@ import weka.classifiers.trees.RandomForest;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
+import weka.core.converters.ArffSaver;
+import weka.core.converters.CSVSaver;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.converters.CSVLoader;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -21,6 +24,7 @@ public class BirdClassifier {
     private final String modelFile = "testdata/RandomForest_model.model";
     private String unknownFile;
     private String outputFile;
+    public boolean CSV;
 
 
 
@@ -53,7 +57,12 @@ public class BirdClassifier {
             labeled.instance(i).setClassValue(clsLabel);
         }
         //System.out.println("\nNew, labeled = \n" + labeled);
+
+        if (CSV){
+            writeToCSV(labeled);
+        } else {
             writeToArff(labeled);
+        }
     }
 
     private RandomForest loadClassifier() throws Exception {
@@ -129,9 +138,20 @@ public class BirdClassifier {
     }
 
     private void writeToArff(Instances labels) throws IOException{
-        FileWriter writer = new FileWriter(this.outputFile);
-        writer.write(labels.toString());
-        writer.close();
+        ArffSaver saver = new ArffSaver();
+        saver.setInstances(labels);
+        saver.setFile(new File(this.outputFile));
+        saver.writeBatch();
+//        FileWriter writer = new FileWriter(this.outputFile);
+//        writer.write(labels.toString());
+//        writer.close();
+    }
+    private void writeToCSV(Instances labels) throws IOException{
+        CSVSaver saver = new CSVSaver();
+        saver.setInstances(labels);
+        saver.setFile(new File(this.outputFile));
+        saver.writeBatch();
+
     }
 }
 

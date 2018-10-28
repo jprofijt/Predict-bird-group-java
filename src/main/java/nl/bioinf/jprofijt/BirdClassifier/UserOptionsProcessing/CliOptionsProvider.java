@@ -4,15 +4,7 @@
  */
 package nl.bioinf.jprofijt.BirdClassifier.UserOptionsProcessing;
 
-import nl.bioinf.jprofijt.BirdClassifier.BoneClassification.FileParser;
 import org.apache.commons.cli.*;
-
-import weka.core.pmml.jaxbbindings.True;
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.NoSuchFileException;
 
 /**
  * Class that parses commandline for the OptionsProvider interface
@@ -24,6 +16,7 @@ public class CliOptionsProvider implements OptionsProvider {
     private static final String FILE = "file";
     private static final String OUT = "out";
     private static final String HELP = "help";
+    private static final String CSV = "csv";
 
     private final String[] commandlineArguments;
     private Options options;
@@ -51,9 +44,10 @@ public class CliOptionsProvider implements OptionsProvider {
     private void buildOptions() {
         this.options = new Options();
         Option helpOption = new Option("h", HELP, false,"Prints this Message");
+        Option typeOption = new Option("c", CSV, false, "Sets the output type to csv");
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
         Option outOption = new Option("o", OUT, true, "output file location. /path/to/output. default BirdclassificationResults.arff or .csv if that option is given");
-        Option typeOption = new Option("c", "csv", false, "Sets the output type to csv");
+
 
         options.addOption(helpOption);
         options.addOption(fileOption);
@@ -77,10 +71,10 @@ public class CliOptionsProvider implements OptionsProvider {
 
             }
 
-            if (commandLine.hasOption("csv")) {
+            if (commandLine.hasOption(CSV)) {
                 this.defaultOutput = "BirdClassificationResults.csv";
 
-            }
+            } else this.defaultOutput = "BirdClassificationResults.arff";
         } catch (ParseException ex) {
             throw new IllegalArgumentException(ex);
         }
@@ -121,6 +115,13 @@ public class CliOptionsProvider implements OptionsProvider {
 
     @Override
     public String getOutputFile() {return this.commandLine.getOptionValue(OUT, this.defaultOutput);}
+
+    @Override
+    public boolean setOutputCSV() {
+        if (commandLine.hasOption(CSV)){
+            return true;
+        } else return false;
+    }
 }
 
 

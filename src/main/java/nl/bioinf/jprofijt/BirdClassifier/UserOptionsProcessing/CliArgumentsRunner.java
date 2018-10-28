@@ -26,6 +26,8 @@ public final class CliArgumentsRunner {
                BirdClassifier Birds = new BirdClassifier();
                Birds.setUnknownFile(options.getDataFile());
                Birds.setOutputFile(options.getOutputFile());
+
+               Birds.CSV = options.setOutputCSV();
                Birds.start();
 
             }

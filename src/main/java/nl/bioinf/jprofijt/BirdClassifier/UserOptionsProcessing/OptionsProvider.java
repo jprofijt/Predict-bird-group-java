@@ -17,4 +17,6 @@ public interface OptionsProvider {
      */
     String getOutputFile();
 
+    boolean setOutputCSV();
+
 }
