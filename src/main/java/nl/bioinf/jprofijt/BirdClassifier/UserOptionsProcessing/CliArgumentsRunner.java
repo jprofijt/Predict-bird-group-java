@@ -19,7 +19,7 @@ public final class CliArgumentsRunner {
     public static void main(String[] args) {
         try {
             CliOptionsProvider options = new CliOptionsProvider(args);
-            if (options.helpRequested()) {
+            if (options.helpRequested() || args.length == 0) {
                 options.printHelp();
                 return;
             } else {

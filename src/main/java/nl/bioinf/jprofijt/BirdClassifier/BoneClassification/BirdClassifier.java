@@ -21,7 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class BirdClassifier {
-    private final String modelFile = "testdata/RandomForest_model.model";
+    private final String modelFile = "RandomForest_model.model";
     private String unknownFile;
     private String outputFile;
     public boolean CSV;
@@ -142,9 +142,6 @@ public class BirdClassifier {
         saver.setInstances(labels);
         saver.setFile(new File(this.outputFile));
         saver.writeBatch();
-//        FileWriter writer = new FileWriter(this.outputFile);
-//        writer.write(labels.toString());
-//        writer.close();
     }
     private void writeToCSV(Instances labels) throws IOException{
         CSVSaver saver = new CSVSaver();

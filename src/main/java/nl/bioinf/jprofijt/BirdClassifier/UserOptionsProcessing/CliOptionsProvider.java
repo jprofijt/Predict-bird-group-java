@@ -6,6 +6,11 @@ package nl.bioinf.jprofijt.BirdClassifier.UserOptionsProcessing;
 
 import org.apache.commons.cli.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+
 /**
  * Class that parses commandline for the OptionsProvider interface
  *
@@ -21,29 +26,28 @@ public class CliOptionsProvider implements OptionsProvider {
     private final String[] commandlineArguments;
     private Options options;
     private CommandLine commandLine;
-    private String file;
     private String defaultOutput;
 
 
-    public CliOptionsProvider(final String[] args){
+    public CliOptionsProvider(final String[] args) {
         this.commandlineArguments = args;
         initialize();
 
     }
 
-    private void initialize(){
+    private void initialize() {
         buildOptions();
         processCommandline();
 
     }
 
-    public boolean helpRequested(){
+    public boolean helpRequested() {
         return this.commandLine.hasOption(HELP);
     }
 
     private void buildOptions() {
         this.options = new Options();
-        Option helpOption = new Option("h", HELP, false,"Prints this Message");
+        Option helpOption = new Option("h", HELP, false, "Prints this Message");
         Option typeOption = new Option("c", CSV, false, "Sets the output type to csv");
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
         Option outOption = new Option("o", OUT, true, "output file location. /path/to/output. default BirdclassificationResults.arff or .csv if that option is given");
@@ -55,28 +59,31 @@ public class CliOptionsProvider implements OptionsProvider {
         options.addOption(typeOption);
     }
 
-    private void processCommandline() {
+    private void processCommandline() throws IllegalStateException {
         try {
             CommandLineParser parser = new DefaultParser();
             this.commandLine = parser.parse(this.options, this.commandlineArguments);
-
-            if (commandLine.hasOption(FILE)) {
-                String f = commandLine.getOptionValue(FILE);
-                if (true) {
-                    this.file = f;
-
-                } else {
-                    throw new IllegalArgumentException("File is unreadable"); // placeholder
-                }
-
+            if (Arrays.toString(commandLine.getOptions()).isEmpty()) {
+                throw new IllegalStateException("commandline is empty");
             }
 
-            if (commandLine.hasOption(CSV)) {
-                this.defaultOutput = "BirdClassificationResults.csv";
+                if (commandLine.hasOption(FILE)) {
+                    if (commandLine.hasOption(CSV)) {
+                        this.defaultOutput = "BirdClassificationResults.csv";
 
-            } else this.defaultOutput = "BirdClassificationResults.arff";
+                    } else this.defaultOutput = "BirdClassificationResults.arff";
+
+                    try {
+                        File f = new File(commandLine.getOptionValue(FILE));
+                        FileInputStream inputStream = new FileInputStream(f);
+                    } catch (FileNotFoundException ex) {
+                        throw new IllegalStateException(ex);
+                    }
+                }
+
+
         } catch (ParseException ex) {
-            throw new IllegalArgumentException(ex);
+            throw new IllegalStateException(ex);
         }
     }
 
@@ -103,7 +110,7 @@ public class CliOptionsProvider implements OptionsProvider {
 */
 
 
- //   }
+    //   }
 
     public void printHelp() {
         HelpFormatter formatter = new HelpFormatter();
@@ -111,17 +118,19 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     @Override
-    public String getDataFile() {return this.commandLine.getOptionValue(FILE);}
+    public String getDataFile() {
+        return this.commandLine.getOptionValue(FILE);
+    }
 
     @Override
-    public String getOutputFile() {return this.commandLine.getOptionValue(OUT, this.defaultOutput);}
+    public String getOutputFile() {
+        return this.commandLine.getOptionValue(OUT, this.defaultOutput);
+    }
 
     @Override
     public boolean setOutputCSV() {
-        if (commandLine.hasOption(CSV)){
-            return true;
-        } else return false;
+        return commandLine.hasOption(CSV);
     }
-}
 
+}
 
