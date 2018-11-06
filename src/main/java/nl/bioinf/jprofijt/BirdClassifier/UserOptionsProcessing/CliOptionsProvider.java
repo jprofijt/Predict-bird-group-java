@@ -5,16 +5,16 @@
 package nl.bioinf.jprofijt.BirdClassifier.UserOptionsProcessing;
 
 import org.apache.commons.cli.*;
+import weka.core.pmml.jaxbbindings.True;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 /**
  * Class that parses commandline for the OptionsProvider interface
  *
- * @author jouke
+ * @author jouke profijt
  */
 
 public class CliOptionsProvider implements OptionsProvider {
@@ -42,7 +42,12 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     public boolean helpRequested() {
-        return this.commandLine.hasOption(HELP);
+        if (commandLine.hasOption(HELP)) {
+            return true;
+        } else if (commandLine.getArgs().length == 0) {
+            return true;
+        } else return false;
+
     }
 
     private void buildOptions() {
@@ -52,6 +57,7 @@ public class CliOptionsProvider implements OptionsProvider {
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
         Option outOption = new Option("o", OUT, true, "output file location. /path/to/output. default BirdclassificationResults.arff or .csv if that option is given");
 
+        fileOption.setRequired(true);
 
         options.addOption(helpOption);
         options.addOption(fileOption);
@@ -62,11 +68,8 @@ public class CliOptionsProvider implements OptionsProvider {
     private void processCommandline() throws IllegalStateException {
         try {
             CommandLineParser parser = new DefaultParser();
+            this.options.
             this.commandLine = parser.parse(this.options, this.commandlineArguments);
-            if (Arrays.toString(commandLine.getOptions()).isEmpty()) {
-                throw new IllegalStateException("commandline is empty");
-            }
-
                 if (commandLine.hasOption(FILE)) {
                     if (commandLine.hasOption(CSV)) {
                         this.defaultOutput = "BirdClassificationResults.csv";

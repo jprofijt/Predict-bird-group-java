@@ -30,17 +30,16 @@ public class BirdClassifier {
 
 
     public void start() {
-        String datafile = "testdata/Bonelenghts.arff";
 
 
         try {
-            Instances instances = loadArff(datafile);
-            printInstances(instances);
-            RandomForest randomForest = buildClassifier(instances);
-            saveClassifier(randomForest);
+            //Instances instances = loadArff(datafile);
+            //printInstances(instances);
+            //RandomForest randomForest = buildClassifier(instances);
+            //saveClassifier(randomForest);
             RandomForest fromFile = loadClassifier();
             Instances unknownInstances = loadArff(unknownFile);
-            System.out.println("\nunclassified unknownInstances = \n" + unknownInstances);
+            //System.out.println("\nunclassified unknownInstances = \n" + unknownInstances);
             classifyNewInstance(fromFile, unknownInstances);
 
         } catch (Exception e) {
@@ -68,49 +67,6 @@ public class BirdClassifier {
     private RandomForest loadClassifier() throws Exception {
         // deserialize model
         return (RandomForest) weka.core.SerializationHelper.read(modelFile);
-    }
-
-    private void saveClassifier(RandomForest randomForest) throws Exception {
-        //post 3.5.5
-        // serialize model
-        weka.core.SerializationHelper.write(modelFile, randomForest);
-
-        // serialize model pre 3.5.5
-//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(modelFile));
-//        oos.writeObject(j48);
-//        oos.flush();
-//        oos.close();
-    }
-
-    private RandomForest buildClassifier(Instances instances) throws Exception {
-        int MaxDepth = 15;
-        RandomForest tree = new RandomForest();         // new instance of tree
-        tree.setMaxDepth(MaxDepth);
-        tree.buildClassifier(instances);
-        return tree;
-    }
-
-    private void printInstances(Instances instances) {
-        int numAttributes = instances.numAttributes();
-
-        for (int i = 0; i < numAttributes; i++) {
-            System.out.println("attribute " + i + " = " + instances.attribute(i));
-        }
-
-        System.out.println("class index = " + instances.classIndex());
-//        Enumeration<Instance> instanceEnumeration = instances.enumerateInstances();
-//        while (instanceEnumeration.hasMoreElements()) {
-//            Instance instance = instanceEnumeration.nextElement();
-//            System.out.println("instance " + instance. + " = " + instance);
-//        }
-
-        //or
-        int numInstances = instances.numInstances();
-        for (int i = 0; i < numInstances; i++) {
-            if (i == 5) break;
-            Instance instance = instances.instance(i);
-            System.out.println("instance = " + instance);
-        }
     }
 
     private Instances loadArff(String datafile) throws IOException {
