@@ -7,3 +7,4 @@ out/
 RandomForest_model.model
 BirdClassificationResults.arff
 BirdClassificationResults.csv
+build.gradle.backup
