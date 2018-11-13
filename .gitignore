@@ -3,6 +3,7 @@
 gradlew
 gradlew.bat
 gradle
+build/
 out/
 RandomForest_model.model
 BirdClassificationResults.arff

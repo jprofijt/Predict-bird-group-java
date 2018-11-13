@@ -59,8 +59,6 @@ public class CliOptionsProvider implements OptionsProvider {
         Option fileOption = new Option("f", FILE, true, "/path/to/file");
         Option outOption = new Option("o", OUT, true, "output file location. /path/to/output. default BirdclassificationResults.arff or .csv if that option is given");
 
-        fileOption.setRequired(true);
-
         options.addOption(helpOption);
         options.addOption(fileOption);
         options.addOption(outOption);
