@@ -34,8 +34,8 @@ public final class CliArgumentsRunner {
         } catch (IllegalStateException ex) {
             System.err.println("An error has occured while processing your commandline \"" + Arrays.toString(args) + "\"");
             System.err.println("Parsing failed. Reason: " + ex.getMessage());
-            CliOptionsProvider options = new CliOptionsProvider(new String[]{});
-            options.printHelp();
+            //currently doesn't print help as this caused more exceptions because of required argument -f.
+
         }
     }
 }

@@ -42,9 +42,11 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     public boolean helpRequested() {
+        /**
+         * if help is requested or commandline is empty return true
+         * @return boolean if help is needed
+         */
         if (commandLine.hasOption(HELP)) {
-            return true;
-        } else if (commandLine.getArgs().length == 0) {
             return true;
         } else return false;
 
@@ -66,9 +68,11 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     private void processCommandline() throws IllegalStateException {
+        /**
+         * processCommandline reads commandline, checks input file & sets the outfile
+         */
         try {
             CommandLineParser parser = new DefaultParser();
-            this.options.
             this.commandLine = parser.parse(this.options, this.commandlineArguments);
                 if (commandLine.hasOption(FILE)) {
                     if (commandLine.hasOption(CSV)) {
@@ -77,10 +81,12 @@ public class CliOptionsProvider implements OptionsProvider {
                     } else this.defaultOutput = "BirdClassificationResults.arff";
 
                     try {
-                        File f = new File(commandLine.getOptionValue(FILE));
+                        //Try to create a new file to see if it exists
+                        File f = new File(getDataFile());
                         FileInputStream inputStream = new FileInputStream(f);
                     } catch (FileNotFoundException ex) {
-                        throw new IllegalStateException(ex);
+                        //if it doesn't it throws FileNotFoundException and handle accordingly
+                        throw new IllegalStateException("File: \"" + getDataFile() + "\" cannot be found");
                     }
                 }
 
@@ -89,31 +95,6 @@ public class CliOptionsProvider implements OptionsProvider {
             throw new IllegalStateException(ex);
         }
     }
-
-/*
-    private boolean checkFile(String file){
-        //should check if the file has the correct filetype.
-        File f = new File(file);
-            if (f.toString().contains(".csv") | f.toString().contains(".arff")) {
-                try {
-                    if (f.exists() && f.canRead()) {
-                        //Checks if file exists
-                        return true;
-
-                    } else {
-                        throw new NoSuchFileException("Given datafile can not be found, Given the correct path?");
-                        return false;
-                    }
-                } catch (NoSuchFileException ex) {
-                    throw new NoSuchFileException(ex);
-                }
-            } else return false;
-
-
-*/
-
-
-    //   }
 
     public void printHelp() {
         HelpFormatter formatter = new HelpFormatter();
