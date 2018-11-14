@@ -30,16 +30,14 @@ public class BirdClassifier {
 
 
     public void start() {
-
+        /**
+         * Starts classification with model file & unknown datafile.
+         */
 
         try {
-            //Instances instances = loadArff(datafile);
-            //printInstances(instances);
-            //RandomForest randomForest = buildClassifier(instances);
-            //saveClassifier(randomForest);
+            // try to open model file, should be delivered with application.
             RandomForest fromFile = loadClassifier();
             Instances unknownInstances = loadArff(unknownFile);
-            //System.out.println("\nunclassified unknownInstances = \n" + unknownInstances);
             classifyNewInstance(fromFile, unknownInstances);
 
         } catch (Exception e) {
@@ -48,6 +46,9 @@ public class BirdClassifier {
     }
 
     private void classifyNewInstance(RandomForest tree, Instances unknownInstances) throws Exception {
+        /**
+         * classifies all unknown instances with the loaded tree model.
+         */
         // create copy
         Instances labeled = new Instances(unknownInstances);
         // label instances
@@ -58,18 +59,27 @@ public class BirdClassifier {
         //System.out.println("\nNew, labeled = \n" + labeled);
 
         if (CSV){
+            // if the csv option is given output should be written in a csv format
             writeToCSV(labeled);
         } else {
+            // else store results as normal. As arff.
             writeToArff(labeled);
         }
     }
 
     private RandomForest loadClassifier() throws Exception {
-        // deserialize model
+        /**
+         * loads RandomForest tree from model file.
+         * @return RandomForest
+         */
         return (RandomForest) weka.core.SerializationHelper.read(modelFile);
     }
 
     private Instances loadArff(String datafile) throws IOException {
+        /**
+         * reads in arff file and converts instances to a Instances object.
+         * @return Instances
+         */
         try {
             DataSource source = new DataSource(datafile);
             Instances data = source.getDataSet();
@@ -83,23 +93,41 @@ public class BirdClassifier {
         }
     }
     public void setUnknownFile(String datafile) {
+        /**
+         * Set file that needs to be classified
+         */
         this.unknownFile = datafile;
         return;
 
     }
 
     public void setOutputFile(String datafile) {
+        /**
+         * Sets output file path
+         */
         this.outputFile = datafile;
         return;
     }
 
     private void writeToArff(Instances labels) throws IOException{
+        /**
+         * if the default ouput is requested(or a arff file is given),
+         * call this function to write the instances to an file of arff format.
+         *
+         * @labels Instances to be written
+         */
         ArffSaver saver = new ArffSaver();
         saver.setInstances(labels);
         saver.setFile(new File(this.outputFile));
         saver.writeBatch();
     }
     private void writeToCSV(Instances labels) throws IOException{
+        /**
+         * if csv is explisitly requested by program or user,
+         * call this function to write to a file of csv format
+         *
+         * @labels Instances to be written
+         */
         CSVSaver saver = new CSVSaver();
         saver.setInstances(labels);
         saver.setFile(new File(this.outputFile));
