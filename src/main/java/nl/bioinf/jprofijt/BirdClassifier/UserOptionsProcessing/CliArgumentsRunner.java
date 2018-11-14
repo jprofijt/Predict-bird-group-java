@@ -10,6 +10,12 @@ import nl.bioinf.jprofijt.BirdClassifier.BoneClassification.BirdClassifier;
 import java.util.Arrays;
 
 public final class CliArgumentsRunner {
+    /**
+     * main class for commandline application
+     *
+     * gets commandline arguments, processes them
+     * & feeds them to a BirdClassifier object
+     */
 
     private CliArgumentsRunner() {
 
@@ -17,6 +23,14 @@ public final class CliArgumentsRunner {
 
 
     public static void main(String[] args) {
+        /**
+         * main module of CliArgumentsRunner
+         *
+         * calls Options Provider
+         * Checks if help is requested or needed
+         * then calls BirdClassifier
+         * @args commandline arguments
+         */
         try {
             CliOptionsProvider options = new CliOptionsProvider(args);
             if (options.helpRequested()) {
@@ -24,10 +38,13 @@ public final class CliArgumentsRunner {
                 return;
             } else {
                BirdClassifier Birds = new BirdClassifier();
+               //set input and output files
                Birds.setUnknownFile(options.getDataFile());
                Birds.setOutputFile(options.getOutputFile());
 
+               //check if csv output is needed
                Birds.CSV = options.setOutputCSV();
+               //start classification process
                Birds.start();
 
             }

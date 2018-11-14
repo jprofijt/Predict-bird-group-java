@@ -48,6 +48,9 @@ public class BirdClassifier {
     private void classifyNewInstance(RandomForest tree, Instances unknownInstances) throws Exception {
         /**
          * classifies all unknown instances with the loaded tree model.
+         *
+         * @tree RandomForest model tree
+         * @unknownInstances Instances to be classified
          */
         // create copy
         Instances labeled = new Instances(unknownInstances);

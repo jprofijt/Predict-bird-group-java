@@ -5,8 +5,6 @@
 package nl.bioinf.jprofijt.BirdClassifier.UserOptionsProcessing;
 
 import org.apache.commons.cli.*;
-import weka.core.pmml.jaxbbindings.True;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,12 +28,18 @@ public class CliOptionsProvider implements OptionsProvider {
 
 
     public CliOptionsProvider(final String[] args) {
+        /**
+         * get arguments & initializes Options Provider
+         */
         this.commandlineArguments = args;
         initialize();
 
     }
 
     private void initialize() {
+        /**
+         * builds available options & starts the processing of the commandline
+         */
         buildOptions();
         processCommandline();
 
@@ -44,6 +48,7 @@ public class CliOptionsProvider implements OptionsProvider {
     public boolean helpRequested() {
         /**
          * if help is requested or commandline is empty return true
+         *
          * @return boolean if help is needed
          */
         if (commandLine.hasOption(HELP)) {
@@ -53,6 +58,14 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     private void buildOptions() {
+        /**
+         * Creates options object and adds necessary options.
+         *
+         * @HELP to give the user the option to request help
+         * @CSV if the output should be in CSV format
+         * @FILE path to classification file
+         * @OUT optional output file path
+         */
         this.options = new Options();
         Option helpOption = new Option("h", HELP, false, "Prints this Message");
         Option typeOption = new Option("c", CSV, false, "Sets the output type to csv");
@@ -67,7 +80,8 @@ public class CliOptionsProvider implements OptionsProvider {
 
     private void processCommandline() throws IllegalStateException {
         /**
-         * processCommandline reads commandline, checks input file & sets the outfile
+         * processCommandline reads commandline,
+         * checks input file & sets the outfile
          */
         try {
             CommandLineParser parser = new DefaultParser();
@@ -95,6 +109,9 @@ public class CliOptionsProvider implements OptionsProvider {
     }
 
     public void printHelp() {
+        /**
+         * Print help in readable format
+         */
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("BirdClassifier", options);
     }
