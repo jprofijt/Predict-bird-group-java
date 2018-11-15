@@ -3,7 +3,7 @@
 Java application that when given a bird or bird fossil's 
 bone lenghts, can classify and label the ecological group that bird belongs to.
 
-Can classify 5 diffrent groups:
+Can classify 5 different groups:
 * SW    :   Swimming Birds
 * W     :   Wading birds
 * R     :   Raptors
@@ -11,11 +11,11 @@ Can classify 5 diffrent groups:
 * SO    :   Singing Birds
 
 Classifies based on:
-* Lenght and Diameter of Humerus
-* Lenght and Diameter of Ulna
-* Lenght and Diameter of Femur
-* Lenght and Diameter of Tibiotarsus
-* Lenght and Diameter of Taesometatasus
+* Length and Diameter of Humerus
+* Length and Diameter of Ulna
+* Length and Diameter of Femur
+* Length and Diameter of Tibiotarsus
+* Length and Diameter of Taesometatasus
 
 ## Usage
 java -jar birdclassifier.jar -f <Birds_to_classify.arff>
