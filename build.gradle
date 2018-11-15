@@ -12,6 +12,7 @@ plugins {
     id 'idea'
     // Apply the application plugin to add support for building an application
     id 'application'
+
 }
 
 //configurations.all {
@@ -32,8 +33,43 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable
-    compile group: 'nz.ac.waikato.cms.weka', name: 'weka-stable', version: '3.8.0'
+    
+    
+    // note to teacher, transitive disables recursive importing of needed dependencies so you have to manually add them,
+    // but makes building fatjar possible because there might be a bug in the com.googlecode.matrix-toolkits-java:mtj:1.0.4 dependency
+    
+    compile('nz.ac.waikato.cms.weka:weka-stable:3.8.0'){
+        transitive = false
+    }
+    compile ('com.googlecode.matrix-toolkits-java:mtj:1.0.4'){
+        transitive = false
+    }
+
+    compile group: 'com.googlecode.netlib-java', name: 'netlib-java', version: '1.1'
+
+    // https://mvnrepository.com/artifact/net.sourceforge.f2j/arpack_combined_all
+    compile group: 'net.sourceforge.f2j', name: 'arpack_combined_all', version: '0.1'
+
+    // https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka.thirdparty/java-cup-11b
+    compile group: 'nz.ac.waikato.cms.weka.thirdparty', name: 'java-cup-11b', version: '2015.03.26'
+
+    // https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka.thirdparty/java-cup-11b-runtime
+    compile group: 'nz.ac.waikato.cms.weka.thirdparty', name: 'java-cup-11b-runtime', version: '2015.03.26'
+
+    // https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka.thirdparty/bounce
+    compile group: 'nz.ac.waikato.cms.weka.thirdparty', name: 'bounce', version: '0.18'
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+    compile group: 'org.apache.commons', name: 'commons-compress', version: '1.10'
+
+
+
+    compile 'com.github.fommil.netlib:all:1.1.2'
+
+    //compile group: 'nz.ac.waikato.cms.weka', name: 'weka-stable', version: '3.8.0'
     compile('commons-cli:commons-cli:1.4')
+    
+
 
 
     // Use JUnit test framework
