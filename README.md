@@ -59,7 +59,10 @@ This application will only work with RandomForest models. and if you choose to c
 
 ## Getting Started
 
-Go to downloads section and download latest release
+Go to [releases](https://github.com/jprofijt/Predict-bird-group-java/releases) tab and download latest release
+
+* extract contents of BirdClassifier.zip
+* run application in extracted folder, because necessary files are located here.
 
 
 ## Getting Started(development)
